@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Slideshow</title>
   <style>
     * {
@@ -11,7 +10,6 @@
 
     body {
       margin: 0;
-      font-family: sans-serif;
       background: #000;
     }
 
@@ -25,32 +23,30 @@
     .slide {
       display: none;
       width: 100%;
-      height: auto;
-      animation: fade 1s ease-in-out;
     }
 
     .slide img {
       width: 100%;
-      display: block;
-    }
-
-    @keyframes fade {
-      from {opacity: 0.4;}
-      to {opacity: 1;}
+      height: auto;
+      vertical-align: middle;
+      object-fit: cover;
     }
 
     .prev, .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
+      width: auto;
       padding: 16px;
+      margin-top: -22px;
       color: white;
       font-weight: bold;
       font-size: 24px;
-      transition: 0.3s ease;
+      transition: 0.3s;
       border-radius: 0 3px 3px 0;
       user-select: none;
-      background: rgba(0,0,0,0.4);
+      background-color: rgba(0,0,0,0.5);
+      z-index: 10;
     }
 
     .next {
@@ -58,59 +54,54 @@
       border-radius: 3px 0 0 3px;
     }
 
-    .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
+    .fade {
+      animation-name: fade;
+      animation-duration: 1s;
     }
 
-    @media (max-width: 768px) {
-      .prev, .next {
-        font-size: 18px;
-        padding: 12px;
-      }
+    @keyframes fade {
+      from {opacity: 0.4}
+      to {opacity: 1}
     }
   </style>
 </head>
 <body>
 
 <div class="slideshow-container">
-
   <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.jpg" alt="Slide 1">
+    <img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.png" alt="Slide 1">
   </div>
-
   <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.jpg" alt="Slide 2">
+    <img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.png" alt="Slide 2">
+  </div>
+  <div class="slide fade">
+    <img src="https://dhjseoads-cmyk.github.io/slideshow/NamaGambarLain.png" alt="Slide 3">
   </div>
 
   <a class="prev" onclick="plusSlides(-1)">❮</a>
   <a class="next" onclick="plusSlides(1)">❯</a>
-
 </div>
 
 <script>
-  let slideIndex = 0;
-  let slides = document.getElementsByClassName("slide");
-  showSlides(slideIndex);
+let slideIndex = 0;
+let slides = document.getElementsByClassName("slide");
 
-  function plusSlides(n) {
-    showSlides(slideIndex += n);
+function showSlides() {
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
   }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 4000); // Change image every 4 seconds
+}
+showSlides();
 
-  function showSlides(n) {
-    if (n >= slides.length) { slideIndex = 0 }
-    if (n < 0) { slideIndex = slides.length - 1 }
-
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-
-    slides[slideIndex].style.display = "block";
-  }
-
-  // Auto slide (optional)
-  setInterval(() => {
-    plusSlides(1);
-  }, 4000); // 4 detik per slide
+function plusSlides(n) {
+  slideIndex += n - 1;
+  if (slideIndex < 0) slideIndex = slides.length - 1;
+  showSlides();
+}
 </script>
 
 </body>
