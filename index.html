@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Slideshow</title>
+  <style>
+    * {box-sizing: border-box;}
+    body {margin: 0;}
+    .slideshow-container {
+      max-width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+    }
+    .slide img {
+      width: 100%;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slideshow-container">
+  <div class="slide">
+    <img src="https://via.placeholder.com/800x400?text=Gambar+1">
+  </div>
+  <div class="slide">
+    <img src="https://via.placeholder.com/800x400?text=Gambar+2">
+  </div>
+  <div class="slide">
+    <img src="https://via.placeholder.com/800x400?text=Gambar+3">
+  </div>
+</div>
+
+<script>
+let slideIndex = 0;
+const showSlides = () => {
+  let slides = document.getElementsByClassName("slide");
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 3000);
+}
+showSlides();
+</script>
+
+</body>
+</html>
