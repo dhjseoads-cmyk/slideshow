@@ -1,118 +1,82 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slideshow</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: #000;
-    }
-
-    .slideshow-container {
-      position: relative;
-      max-width: 100%;
-      margin: auto;
-      overflow: hidden;
-    }
-
-    .slide {
-      display: none;
-      width: 100%;
-      height: auto;
-      animation: fade 1s ease-in-out;
-    }
-
-    .slide img {
-      width: 100%;
-      display: block;
-    }
-
-    @keyframes fade {
-      from {opacity: 0.4;}
-      to {opacity: 1;}
-    }
-
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      padding: 16px;
-      color: white;
-      font-weight: bold;
-      font-size: 24px;
-      transition: 0.3s ease;
-      border-radius: 0 3px 3px 0;
-      user-select: none;
-      background: rgba(0,0,0,0.4);
-    }
-
-    .next {
-      right: 0;
-      border-radius: 3px 0 0 3px;
-    }
-
-    .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
-    }
-
-    @media (max-width: 768px) {
-      .prev, .next {
-        font-size: 18px;
-        padding: 12px;
-      }
-    }
-  </style>
-</head>
-<body>
-
 <div class="slideshow-container">
-
-  <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.jpg" alt="Slide 1">
+  <div class="slide">
+    <img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.png" alt="Slide 1">
+  </div>
+  <div class="slide">
+    <img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.png" alt="Slide 2">
   </div>
 
-  <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.jpg" alt="Slide 2">
+  <!-- Tambahkan gambar lain di sini -->
+  <!--
+  <div class="slide">
+    <img src="https://dhjseoads-cmyk.github.io/slideshow/NamaFileLain.png" alt="Slide 3">
   </div>
+  -->
 
-
-  <a class="prev" onclick="plusSlides(-1)">❮</a>
-  <a class="next" onclick="plusSlides(1)">❯</a>
-
+  <!-- Tombol panah -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
 </div>
 
+<style>
+.slideshow-container {
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.slide {
+  display: none;
+  transition: opacity 0.6s ease-in-out;
+}
+.slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0.5);
+  user-select: none;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.prev {
+  left: 10px;
+}
+.next {
+  right: 10px;
+}
+</style>
+
 <script>
-  let slideIndex = 0;
-  let slides = document.getElementsByClassName("slide");
-  showSlides(slideIndex);
+let slideIndex = 0;
+const slides = document.getElementsByClassName("slide");
 
-  function plusSlides(n) {
-    showSlides(slideIndex += n);
+function showSlides() {
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
   }
+  slideIndex++;
+  if (slideIndex > slides.length) slideIndex = 1;
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 4000); // Ganti slide tiap 4 detik
+}
 
-  function showSlides(n) {
-    if (n >= slides.length) { slideIndex = 0 }
-    if (n < 0) { slideIndex = slides.length - 1 }
-
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-
-    slides[slideIndex].style.display = "block";
+function plusSlides(n) {
+  slideIndex += n - 1;
+  if (slideIndex < 0) slideIndex = slides.length - 1;
+  if (slideIndex >= slides.length) slideIndex = 0;
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
   }
+  slides[slideIndex].style.display = "block";
+}
 
-  // Auto slide (optional)
-  setInterval(() => {
-    plusSlides(1);
-  }, 4000); // 4 detik per slide
+showSlides();
 </script>
-
-</body>
-</html>
