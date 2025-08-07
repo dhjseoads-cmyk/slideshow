@@ -4,14 +4,8 @@
   <meta charset="UTF-8">
   <title>Slideshow</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #000;
-    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #000; }
 
     .slideshow-container {
       position: relative;
@@ -23,90 +17,81 @@
     .slide {
       display: none;
       width: 100%;
+      animation: fade 1s;
     }
 
     .slide img {
       width: 100%;
       height: auto;
-      vertical-align: middle;
       object-fit: cover;
+      vertical-align: middle;
+    }
+
+    @keyframes fade {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
     }
 
     .prev, .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
-      width: auto;
       padding: 16px;
-      margin-top: -22px;
       color: white;
       font-weight: bold;
       font-size: 24px;
-      transition: 0.3s;
-      border-radius: 0 3px 3px 0;
-      user-select: none;
       background-color: rgba(0,0,0,0.5);
+      user-select: none;
+      transform: translateY(-50%);
       z-index: 10;
     }
 
-    .next {
-      right: 0;
-      border-radius: 3px 0 0 3px;
-    }
-
-    .fade {
-      animation-name: fade;
-      animation-duration: 1s;
-    }
-
-    @keyframes fade {
-      from {opacity: 0.4}
-      to {opacity: 1}
-    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
   </style>
 </head>
 <body>
 
 <div class="slideshow-container">
-  <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.png" alt="Slide 1">
-  </div>
-  <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.png" alt="Slide 2">
-  </div>
- <div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/STEELBRIDGE.png" alt="Slide 3">
-  </div>
-<div class="slide fade">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/RECLAIMER.png" alt="Slide 4">
-  </div>
-  
-  <a class="prev" onclick="plusSlides(-1)">❮</a>
-  <a class="next" onclick="plusSlides(1)">❯</a>
+  <div class="slide"><img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.png" alt="Slide 1"></div>
+  <div class="slide"><img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.png" alt="Slide 2"></div>
+  <div class="slide"><img src="https://dhjseoads-cmyk.github.io/slideshow/RECLAIMER.png" alt="Slide 3"></div>
+  <div class="slide"><img src="https://dhjseoads-cmyk.github.io/slideshow/STEELBRIDGE.png" alt="Slide 4"></div>
+
+  <a class="prev" onclick="changeSlide(-1)">❮</a>
+  <a class="next" onclick="changeSlide(1)">❯</a>
 </div>
 
 <script>
-let slideIndex = 0;
-let slides = document.getElementsByClassName("slide");
+  let slideIndex = 0;
+  let slides = document.getElementsByClassName("slide");
+  let autoTimer;
 
-function showSlides() {
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+  function showSlide(index) {
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex = (index + slides.length) % slides.length;
+    slides[slideIndex].style.display = "block";
   }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}
-  slides[slideIndex - 1].style.display = "block";
-  setTimeout(showSlides, 4000); // Change image every 4 seconds
-}
-showSlides();
 
-function plusSlides(n) {
-  slideIndex += n - 1;
-  if (slideIndex < 0) slideIndex = slides.length - 1;
-  showSlides();
-}
+  function changeSlide(n) {
+    clearTimeout(autoTimer);
+    showSlide(slideIndex + n);
+    startAutoSlide(); // Restart timer on manual navigation
+  }
+
+  function startAutoSlide() {
+    autoTimer = setTimeout(() => {
+      showSlide(slideIndex + 1);
+      startAutoSlide();
+    }, 4000); // Delay antar slide: 4 detik
+  }
+
+  // Mulai slideshow saat halaman dibuka
+  showSlide(slideIndex);
+  startAutoSlide();
 </script>
 
 </body>
 </html>
-
