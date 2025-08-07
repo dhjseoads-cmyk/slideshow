@@ -2,55 +2,113 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Slideshow</title>
+  <title>Slideshow Smooth</title>
   <style>
-    * {box-sizing: border-box;}
-    body {margin: 0;}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+    }
+
     .slideshow-container {
-      max-width: 100%;
       position: relative;
+      max-width: 100%;
+      margin: auto;
       overflow: hidden;
     }
+
     .slide {
-      display: none;
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
     }
+
     .slide img {
       width: 100%;
       vertical-align: middle;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    /* Tombol panah */
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      transition: 0.3s ease;
+      user-select: none;
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 50%;
+    }
+
+    .next {
+      right: 10px;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
     }
   </style>
 </head>
 <body>
 
 <div class="slideshow-container">
-  <div class="slide">
-    <img src="BenderaIKN.png">
+  <div class="slide active">
+    <img src="BenderaIKN.png" alt="Slide 1">
   </div>
   <div class="slide">
-    <img src="JPO.png">
+    <img src="JPO.png" alt="Slide 2">
   </div>
-
+  <!-- Tambahkan gambar tambahan di sini jika ada -->
+  
+  <!-- Tombol panah -->
+  <a class="prev" onclick="plusSlides(-1)">❮</a>
+  <a class="next" onclick="plusSlides(1)">❯</a>
 </div>
 
 <script>
-let slideIndex = 0;
-const showSlides = () => {
+  let slideIndex = 0;
   let slides = document.getElementsByClassName("slide");
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
+
+  function showSlide(index) {
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].classList.remove("active");
+    }
+    slides[index].classList.add("active");
   }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}
-  slides[slideIndex - 1].style.display = "block";
-  setTimeout(showSlides, 3000);
-}
-showSlides();
+
+  function plusSlides(n) {
+    slideIndex = (slideIndex + n + slides.length) % slides.length;
+    showSlide(slideIndex);
+  }
+
+  function autoSlide() {
+    plusSlides(1);
+    setTimeout(autoSlide, 4000); // ganti setiap 4 detik
+  }
+
+  window.onload = () => {
+    autoSlide();
+  }
 </script>
 
 </body>
 </html>
-
-
-
-
-
