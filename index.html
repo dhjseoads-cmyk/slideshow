@@ -1,82 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slideshow</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #000;
+    }
+
+    .slideshow-container {
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
+      object-fit: cover;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      transition: 0.3s;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .fade {
+      animation-name: fade;
+      animation-duration: 1s;
+    }
+
+    @keyframes fade {
+      from {opacity: 0.4}
+      to {opacity: 1}
+    }
+  </style>
+</head>
+<body>
+
 <div class="slideshow-container">
-  <div class="slide">
+  <div class="slide fade">
     <img src="https://dhjseoads-cmyk.github.io/slideshow/BenderaIKN.png" alt="Slide 1">
   </div>
-  <div class="slide">
+  <div class="slide fade">
     <img src="https://dhjseoads-cmyk.github.io/slideshow/JPO.png" alt="Slide 2">
   </div>
 
-  <!-- Tambahkan gambar lain di sini -->
-  <!--
-  <div class="slide">
-    <img src="https://dhjseoads-cmyk.github.io/slideshow/NamaFileLain.png" alt="Slide 3">
-  </div>
-  -->
 
-  <!-- Tombol panah -->
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  <a class="prev" onclick="plusSlides(-1)">❮</a>
+  <a class="next" onclick="plusSlides(1)">❯</a>
 </div>
-
-<style>
-.slideshow-container {
-  max-width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-.slide {
-  display: none;
-  transition: opacity 0.6s ease-in-out;
-}
-.slide img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  background-color: rgba(0, 0, 0, 0.5);
-  user-select: none;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-.prev {
-  left: 10px;
-}
-.next {
-  right: 10px;
-}
-</style>
 
 <script>
 let slideIndex = 0;
-const slides = document.getElementsByClassName("slide");
+let slides = document.getElementsByClassName("slide");
 
 function showSlides() {
   for (let i = 0; i < slides.length; i++) {
     slides[i].style.display = "none";
   }
   slideIndex++;
-  if (slideIndex > slides.length) slideIndex = 1;
+  if (slideIndex > slides.length) {slideIndex = 1}
   slides[slideIndex - 1].style.display = "block";
-  setTimeout(showSlides, 4000); // Ganti slide tiap 4 detik
+  setTimeout(showSlides, 4000); // Change image every 4 seconds
 }
+showSlides();
 
 function plusSlides(n) {
   slideIndex += n - 1;
   if (slideIndex < 0) slideIndex = slides.length - 1;
-  if (slideIndex >= slides.length) slideIndex = 0;
-  for (let i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  slides[slideIndex].style.display = "block";
+  showSlides();
 }
-
-showSlides();
 </script>
+
+</body>
+</html>
